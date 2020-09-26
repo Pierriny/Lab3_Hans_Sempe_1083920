@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
+#include <stdio.h>
 #pragma once
 
 namespace Lab3HansSempe1083920 {
@@ -13,6 +14,13 @@ namespace Lab3HansSempe1083920 {
 	using namespace System::Drawing;
 	using namespace std;
 
+	struct nodo {
+		int dato;
+		struct nodo* siguiente;
+	};
+
+	typedef nodo* ptrPila;
+
 	/// <summary>
 	/// Resumen de MyForm1
 	/// </summary>
@@ -21,7 +29,9 @@ namespace Lab3HansSempe1083920 {
 		static int Second = 0;
 		static int Minute = 0;
 		String^ Sec;
-	private: System::Windows::Forms::Button^ Repartir;
+	private: System::Windows::Forms::Button^ Prepare;
+
+
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::DataGridView^ Table;
 
@@ -79,7 +89,7 @@ namespace Lab3HansSempe1083920 {
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm1::typeid));
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->tiempo = (gcnew System::Windows::Forms::Label());
-			this->Repartir = (gcnew System::Windows::Forms::Button());
+			this->Prepare = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->Table = (gcnew System::Windows::Forms::DataGridView());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
@@ -112,18 +122,18 @@ namespace Lab3HansSempe1083920 {
 			this->tiempo->TabIndex = 0;
 			this->tiempo->Text = L"0:0";
 			// 
-			// Repartir
+			// Prepare
 			// 
-			this->Repartir->BackColor = System::Drawing::Color::White;
-			this->Repartir->Font = (gcnew System::Drawing::Font(L"Algerian", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->Prepare->BackColor = System::Drawing::Color::White;
+			this->Prepare->Font = (gcnew System::Drawing::Font(L"Algerian", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Repartir->Location = System::Drawing::Point(22, 17);
-			this->Repartir->Name = L"Repartir";
-			this->Repartir->Size = System::Drawing::Size(211, 46);
-			this->Repartir->TabIndex = 2;
-			this->Repartir->Text = L"Prepare the table";
-			this->Repartir->UseVisualStyleBackColor = false;
-			this->Repartir->Click += gcnew System::EventHandler(this, &MyForm1::Repartir_Click);
+			this->Prepare->Location = System::Drawing::Point(22, 17);
+			this->Prepare->Name = L"Prepare";
+			this->Prepare->Size = System::Drawing::Size(211, 46);
+			this->Prepare->TabIndex = 2;
+			this->Prepare->Text = L"Prepare the table";
+			this->Prepare->UseVisualStyleBackColor = false;
+			this->Prepare->Click += gcnew System::EventHandler(this, &MyForm1::Prepare_Click);
 			// 
 			// button1
 			// 
@@ -248,7 +258,7 @@ namespace Lab3HansSempe1083920 {
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->Table);
 			this->Controls->Add(this->button1);
-			this->Controls->Add(this->Repartir);
+			this->Controls->Add(this->Prepare);
 			this->Controls->Add(this->tiempo);
 			this->Name = L"MyForm1";
 			this->Text = L"SOLITAIRE";
@@ -258,16 +268,6 @@ namespace Lab3HansSempe1083920 {
 
 		}
 #pragma endregion
-
-
-
-
-
-
-
-
-
-
 
 		int generarAtor(int limI, int limS) {
 			int xx;
@@ -283,7 +283,7 @@ namespace Lab3HansSempe1083920 {
 			return yy;
 		}
 
-		private: System::Void Repartir_Click(System::Object^ sender, System::EventArgs^ e) {
+		private: System::Void Prepare_Click(System::Object^ sender, System::EventArgs^ e) {
 
 			
 			int Num_Fila = 8, Num_Columns = 20;
@@ -330,12 +330,37 @@ namespace Lab3HansSempe1083920 {
 			Table->Rows[0]->Cells[10]->Value = "G5";
 			Table->Rows[0]->Cells[12]->Value = "G6";
 			Table->Rows[0]->Cells[14]->Value = "G7";
+		
+		}
 
-			
+		void push(ptrPila& p, int valor)
+		{
+			ptrPila aux;
+			aux = new(struct nodo);  // apuntamos al nuevo nodo creado
+			aux->dato = valor;
+
+			aux->siguiente = p;
+			p = aux;
+		}
+
+		nodo* pila = null;
+	
+		void agregarpila(nodo* &pila, int n) {
+			nodo* nuevo_nodo = new nodo();
+			nuevo_nodo->dato = n;
+			nuevo_nodo->siguiente = pila;
+			pila = nuevo_nodo;
 		}
 		
+		
+
+
+
+
 		private: System::Void R_Click(System::Object^ sender, System::EventArgs^ e) {
 	
+
+
 
 
 
@@ -348,8 +373,6 @@ namespace Lab3HansSempe1083920 {
 
 
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
-
-		
 
 		Second++;
 		if (Second == 60)
@@ -364,6 +387,5 @@ namespace Lab3HansSempe1083920 {
 		
 	}
 	
-
 };
 }
