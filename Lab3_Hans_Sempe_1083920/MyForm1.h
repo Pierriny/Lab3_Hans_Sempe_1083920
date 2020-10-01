@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "List.h";
 #pragma once
 
 namespace Lab3HansSempe1083920 {
@@ -33,7 +34,7 @@ namespace Lab3HansSempe1083920 {
 
 
 	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::DataGridView^ Table;
+
 
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::TextBox^ textBox2;
@@ -44,13 +45,25 @@ namespace Lab3HansSempe1083920 {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Button^ R;
+	private: System::Windows::Forms::ListBox^ lstLista;
+
+
 
 		   String^ Min;
 
 	public:
+
+		List* miList;
+
 		MyForm1(void)
 		{
 			InitializeComponent();
+			miList = new List();
+			miList->count = 0;
+			miList->start = nullptr;
+			miList->end = nullptr;
+
+
 			//
 			//TODO: agregar código de constructor aquí
 			//
@@ -91,7 +104,6 @@ namespace Lab3HansSempe1083920 {
 			this->tiempo = (gcnew System::Windows::Forms::Label());
 			this->Prepare = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->Table = (gcnew System::Windows::Forms::DataGridView());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
@@ -101,7 +113,7 @@ namespace Lab3HansSempe1083920 {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->R = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Table))->BeginInit();
+			this->lstLista = (gcnew System::Windows::Forms::ListBox());
 			this->SuspendLayout();
 			// 
 			// timer1
@@ -146,15 +158,6 @@ namespace Lab3HansSempe1083920 {
 			this->button1->TabIndex = 3;
 			this->button1->Text = L"Save";
 			this->button1->UseVisualStyleBackColor = false;
-			// 
-			// Table
-			// 
-			this->Table->BackgroundColor = System::Drawing::Color::DarkGreen;
-			this->Table->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->Table->Location = System::Drawing::Point(12, 132);
-			this->Table->Name = L"Table";
-			this->Table->Size = System::Drawing::Size(524, 217);
-			this->Table->TabIndex = 4;
 			// 
 			// textBox1
 			// 
@@ -241,12 +244,25 @@ namespace Lab3HansSempe1083920 {
 			this->R->UseVisualStyleBackColor = false;
 			this->R->Click += gcnew System::EventHandler(this, &MyForm1::R_Click);
 			// 
+			// lstLista
+			// 
+			this->lstLista->BackColor = System::Drawing::Color::Green;
+			this->lstLista->Font = (gcnew System::Drawing::Font(L"Times New Roman", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lstLista->FormattingEnabled = true;
+			this->lstLista->ItemHeight = 21;
+			this->lstLista->Location = System::Drawing::Point(12, 132);
+			this->lstLista->Name = L"lstLista";
+			this->lstLista->Size = System::Drawing::Size(567, 256);
+			this->lstLista->TabIndex = 14;
+			// 
 			// MyForm1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
-			this->ClientSize = System::Drawing::Size(720, 361);
+			this->ClientSize = System::Drawing::Size(844, 400);
+			this->Controls->Add(this->lstLista);
 			this->Controls->Add(this->R);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
@@ -256,13 +272,11 @@ namespace Lab3HansSempe1083920 {
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
-			this->Controls->Add(this->Table);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->Prepare);
 			this->Controls->Add(this->tiempo);
 			this->Name = L"MyForm1";
 			this->Text = L"SOLITAIRE";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Table))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -271,105 +285,46 @@ namespace Lab3HansSempe1083920 {
 
 		int generarAtor(int limI, int limS) {
 			int xx;
-			xx = limI + rand() % (limS + 1 - limI);
-			int* T = &xx;
+			xx = limI + rand() % (limS + 1 - limI);	
 			return xx;
 		}
-
 		int generarAlib(int limIi, int limSs) {
 			int  yy;
 			yy = limIi + rand() % (limSs + 1 - limIi);
-			int* L = &yy;
 			return yy;
 		}
 
-		private: System::Void Prepare_Click(System::Object^ sender, System::EventArgs^ e) {
-
-			
-			int Num_Fila = 8, Num_Columns = 20;
-
-			for (int i = 0; i < Num_Columns; i++) {
-
-				DataGridViewColumn^ nuevacolumna = gcnew DataGridViewColumn();
-				nuevacolumna->Width = 25;
-
-				DataGridViewCell^ cellTemplate = gcnew DataGridViewTextBoxCell();
-				nuevacolumna->CellTemplate = cellTemplate;
-
-				Table->Columns->Add(nuevacolumna);
+		void LlenarListBox() {
+			Node* temp = miList->start;
+			lstLista->Items->Clear();
+			while (temp != nullptr) {
+				lstLista->Items->Add(temp->value);
+				temp = temp->next;
 			}
+		}	 
 
-			for (int i = 1; i < Num_Fila; i++) {
-				Table->Rows->Add();
-			}
+		private: System::Void Prepare_Click(System::Object^ sender, System::EventArgs^ e) {	
 
-			Table->ColumnHeadersVisible = false;
-			Table->RowHeadersVisible = false;
+			//int value = Convert::ToInt32(txtNumero->Text);
 
+			int g = generarAtor(1, 13);
+			miList->InsertAtStart(g);
+			LlenarListBox();
 
-			for (int i = 0; i < Num_Fila; i++)
-			{
-				for (int j = 0; j < Num_Columns; j++)
-				{
-					Table->Rows[i]->Cells[j]->Style->BackColor = Color::Green;
-				}
-			}
-
-			Table->Rows[0]->Cells[0]->Value = "G/P";
-			Table->Rows[1]->Cells[0]->Value = "1";
-			Table->Rows[2]->Cells[0]->Value = "2";
-			Table->Rows[3]->Cells[0]->Value = "3";
-			Table->Rows[4]->Cells[0]->Value = "4";
-			Table->Rows[5]->Cells[0]->Value = "5";
-			Table->Rows[6]->Cells[0]->Value = "6";
-			Table->Rows[7]->Cells[0]->Value = "7";
-			Table->Rows[0]->Cells[2]->Value = "G1";
-			Table->Rows[0]->Cells[4]->Value = "G2";
-			Table->Rows[0]->Cells[6]->Value = "G3";
-			Table->Rows[0]->Cells[8]->Value = "G4";
-			Table->Rows[0]->Cells[10]->Value = "G5";
-			Table->Rows[0]->Cells[12]->Value = "G6";
-			Table->Rows[0]->Cells[14]->Value = "G7";
-		
 		}
 
-		void push(ptrPila& p, int valor)
-		{
-			ptrPila aux;
-			aux = new(struct nodo);  // apuntamos al nuevo nodo creado
-			aux->dato = valor;
 
-			aux->siguiente = p;
-			p = aux;
-		}
 
-		nodo* pila = null;
-	
-		void agregarpila(nodo* &pila, int n) {
-			nodo* nuevo_nodo = new nodo();
-			nuevo_nodo->dato = n;
-			nuevo_nodo->siguiente = pila;
-			pila = nuevo_nodo;
-		}
 		
 		
-
-
 
 
 		private: System::Void R_Click(System::Object^ sender, System::EventArgs^ e) {
 	
 
-
-
-
-
-
 			timer1->Enabled = true;
 
 		}
-
-
 
 
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
@@ -384,8 +339,6 @@ namespace Lab3HansSempe1083920 {
 		Min = Convert::ToString(Minute);
 
 		tiempo->Text = Min + ":" + Sec;
-		
-	}
-	
+	}	
 };
 }
