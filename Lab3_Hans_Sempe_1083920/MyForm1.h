@@ -30,16 +30,21 @@ namespace Lab3HansSempe1083920 {
 		static int Second = 0;
 		static int Minute = 0;
 		String^ Sec;
+		String^ Min;
+
 	private: System::Windows::Forms::Button^ Prepare;
 
-
 	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::TextBox^ GrupoO;
+	private: System::Windows::Forms::TextBox^ Desde;
 
 
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::TextBox^ textBox3;
-	private: System::Windows::Forms::Button^ button2;
+
+
+	private: System::Windows::Forms::TextBox^ GrupoD;
+	private: System::Windows::Forms::Button^ Mover;
+
+
 	private: System::Windows::Forms::Button^ TomarMazo;
 
 	private: System::Windows::Forms::TextBox^ ElMazo;
@@ -48,49 +53,31 @@ namespace Lab3HansSempe1083920 {
 	private: System::Windows::Forms::Label^ Mazo;
 
 	private: System::Windows::Forms::Button^ R;
+
 	private: System::Windows::Forms::ListBox^ lstLista;
-
-
-
-		   String^ Min;
-
-	public:
-
-		List* miList;
 	private: System::Windows::Forms::ListBox^ listBox1;
 	private: System::Windows::Forms::ListBox^ listBox2;
 	private: System::Windows::Forms::ListBox^ listBox3;
 	private: System::Windows::Forms::ListBox^ listBox4;
 	private: System::Windows::Forms::ListBox^ listBox5;
 	private: System::Windows::Forms::ListBox^ listBox6;
-	public:
 
-	public:
-
-
-	public:
-
-
-
-
-
-
-
-
-
-		   List* miList2;
-		   List* miList3;
-		   List* miList4;
-		   List* miList5;
-		   List* miList6;
 	private: System::Windows::Forms::Label^ label2;
-	public:
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Label^ label5;
 	private: System::Windows::Forms::Label^ label6;
 	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::Label^ label8;
+	private: System::Windows::Forms::Label^ label8;	  
+
+	public:
+
+		   List* miList;
+		   List* miList2;
+		   List* miList3;
+		   List* miList4;
+		   List* miList5;
+		   List* miList6;
 		   List* miList7;
 
 		MyForm1(void)
@@ -172,10 +159,10 @@ namespace Lab3HansSempe1083920 {
 			this->tiempo = (gcnew System::Windows::Forms::Label());
 			this->Prepare = (gcnew System::Windows::Forms::Button());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->GrupoO = (gcnew System::Windows::Forms::TextBox());
+			this->Desde = (gcnew System::Windows::Forms::TextBox());
+			this->GrupoD = (gcnew System::Windows::Forms::TextBox());
+			this->Mover = (gcnew System::Windows::Forms::Button());
 			this->TomarMazo = (gcnew System::Windows::Forms::Button());
 			this->ElMazo = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -218,13 +205,13 @@ namespace Lab3HansSempe1083920 {
 			// Prepare
 			// 
 			this->Prepare->BackColor = System::Drawing::Color::White;
-			this->Prepare->Font = (gcnew System::Drawing::Font(L"Algerian", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->Prepare->Font = (gcnew System::Drawing::Font(L"Algerian", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Prepare->Location = System::Drawing::Point(22, 19);
+			this->Prepare->Location = System::Drawing::Point(24, 84);
 			this->Prepare->Name = L"Prepare";
-			this->Prepare->Size = System::Drawing::Size(208, 46);
+			this->Prepare->Size = System::Drawing::Size(127, 46);
 			this->Prepare->TabIndex = 2;
-			this->Prepare->Text = L"Prepare the table";
+			this->Prepare->Text = L"Mostrar mazo";
 			this->Prepare->UseVisualStyleBackColor = false;
 			this->Prepare->Click += gcnew System::EventHandler(this, &MyForm1::Prepare_Click);
 			// 
@@ -240,37 +227,38 @@ namespace Lab3HansSempe1083920 {
 			this->button1->Text = L"Save";
 			this->button1->UseVisualStyleBackColor = false;
 			// 
-			// textBox1
+			// GrupoO
 			// 
-			this->textBox1->Location = System::Drawing::Point(610, 174);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 5;
+			this->GrupoO->Location = System::Drawing::Point(610, 174);
+			this->GrupoO->Name = L"GrupoO";
+			this->GrupoO->Size = System::Drawing::Size(100, 20);
+			this->GrupoO->TabIndex = 5;
 			// 
-			// textBox2
+			// Desde
 			// 
-			this->textBox2->Location = System::Drawing::Point(610, 225);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(100, 20);
-			this->textBox2->TabIndex = 6;
+			this->Desde->Location = System::Drawing::Point(610, 225);
+			this->Desde->Name = L"Desde";
+			this->Desde->Size = System::Drawing::Size(100, 20);
+			this->Desde->TabIndex = 6;
 			// 
-			// textBox3
+			// GrupoD
 			// 
-			this->textBox3->Location = System::Drawing::Point(610, 273);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(100, 20);
-			this->textBox3->TabIndex = 7;
+			this->GrupoD->Location = System::Drawing::Point(610, 273);
+			this->GrupoD->Name = L"GrupoD";
+			this->GrupoD->Size = System::Drawing::Size(100, 20);
+			this->GrupoD->TabIndex = 7;
 			// 
-			// button2
+			// Mover
 			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Algerian", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->Mover->Font = (gcnew System::Drawing::Font(L"Algerian", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button2->Location = System::Drawing::Point(622, 315);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 8;
-			this->button2->Text = L"Move";
-			this->button2->UseVisualStyleBackColor = true;
+			this->Mover->Location = System::Drawing::Point(622, 315);
+			this->Mover->Name = L"Mover";
+			this->Mover->Size = System::Drawing::Size(75, 23);
+			this->Mover->TabIndex = 8;
+			this->Mover->Text = L"Move";
+			this->Mover->UseVisualStyleBackColor = true;
+			this->Mover->Click += gcnew System::EventHandler(this, &MyForm1::Mover_Click);
 			// 
 			// TomarMazo
 			// 
@@ -317,7 +305,7 @@ namespace Lab3HansSempe1083920 {
 			this->R->BackColor = System::Drawing::Color::White;
 			this->R->Font = (gcnew System::Drawing::Font(L"Algerian", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->R->Location = System::Drawing::Point(22, 74);
+			this->R->Location = System::Drawing::Point(20, 12);
 			this->R->Name = L"R";
 			this->R->Size = System::Drawing::Size(46, 46);
 			this->R->TabIndex = 13;
@@ -526,10 +514,10 @@ namespace Lab3HansSempe1083920 {
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->ElMazo);
 			this->Controls->Add(this->TomarMazo);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->textBox3);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->Mover);
+			this->Controls->Add(this->GrupoD);
+			this->Controls->Add(this->Desde);
+			this->Controls->Add(this->GrupoO);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->Prepare);
 			this->Controls->Add(this->tiempo);
@@ -541,17 +529,15 @@ namespace Lab3HansSempe1083920 {
 		}
 #pragma endregion
 
+
+
+
 		int generarAtor(int limI, int limS) {
 			int xx;
 			xx = limI + rand() % (limS + 1 - limI);	
 			return xx;
 		}
-		int generarAlib(int limIi, int limSs) {
-			int  yy;
-			yy = limIi + rand() % (limSs + 1 - limIi);
-			return yy;
-		}
-
+		
 		void LlenarListBox() {
 			Node* temp = miList->start;
 			lstLista->Items->Clear();
@@ -615,20 +601,13 @@ namespace Lab3HansSempe1083920 {
 			}
 		}
 
-
-		private: System::Void Prepare_Click(System::Object^ sender, System::EventArgs^ e) {	
-
-			//int value = Convert::ToInt32(txtNumero->Text);
-
-		}
-
+	private: System::Void Prepare_Click(System::Object^ sender, System::EventArgs^ e) {
+		int value = Convert::ToInt32(ElMazo->Text);
+		int mazo = generarAtor(1, 13);
+	}
 
 		private: System::Void R_Click(System::Object^ sender, System::EventArgs^ e) {
 			
-			int mazo = generarAtor(1, 13);
-			String^ M = System::Convert::ToString(mazo);
-			Mazo->Text = M;
-
 			int g = generarAtor(1, 13);
 			miList->InsertAtStart(g);
 			LlenarListBox();
@@ -702,10 +681,13 @@ namespace Lab3HansSempe1083920 {
 			timer1->Enabled = true;
 		}
 
+	private: System::Void Mover_Click(System::Object^ sender, System::EventArgs^ e) {
 
 
 
 
+
+	}
 
 
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
@@ -721,5 +703,7 @@ namespace Lab3HansSempe1083920 {
 
 		tiempo->Text = Min + ":" + Sec;
 	}	
+
+
 };
 }
